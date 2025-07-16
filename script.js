@@ -48,31 +48,6 @@ const bgVideos = {
 };
 
 expTitles.forEach((title, idx) => {
-  let expStep = 0;
-  let intervalId = null;
-
-  function expChangeFont() {
-    expStep++;
-    if (expStep % randomInt(2, 3) === 0) {
-      title.style.fontFamily = officialFont;
-    } else {
-      const randomFont = crazyFonts[Math.floor(Math.random() * crazyFonts.length)];
-      title.style.fontFamily = randomFont;
-    }
-  }
-
-  title.addEventListener('mouseenter', () => {
-    expStep = 0;
-    expChangeFont();
-    intervalId = setInterval(expChangeFont, 500);
-    expIntervals.set(title, intervalId);
-  });
-
-  title.addEventListener('mouseleave', () => {
-    clearInterval(expIntervals.get(title));
-    title.style.fontFamily = officialFont;
-  });
-
   // Mostrar solo una experiencia abierta a la vez (sin alternar)
   title.addEventListener('click', () => {
     const item = title.parentElement;
