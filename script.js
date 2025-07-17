@@ -48,8 +48,7 @@ const bgVideos = {
 };
 
 expTitles.forEach((title, idx) => {
-  // Mostrar solo una experiencia abierta a la vez (sin alternar)
-  title.addEventListener('click', () => {
+  title.addEventListener('click', (event) => {
     const item = title.parentElement;
     const wasOpen = item.classList.contains('open');
     // Cerrar todas las experiencias abiertas
@@ -59,8 +58,25 @@ expTitles.forEach((title, idx) => {
     // Si la experiencia no estaba abierta, abrirla y mostrar video si corresponde
     if (!wasOpen) {
       item.classList.add('open');
-      if (bgVideos[idx]) {
-        showBgMedia('video', bgVideos[idx]);
+      // Mostrar video de fondo según experiencia
+      if (idx === 0) { // Together
+        event.stopPropagation();
+        showBgMedia('video', 'assets/videos/together.mp4');
+      } else if (title.textContent.includes('Dangerous Animals')) {
+        event.stopPropagation();
+        showBgMedia('video', 'assets/videos/dangerousanimals.mp4');
+      } else if (title.textContent.includes("From Earth's Heart to Yours")) {
+        event.stopPropagation();
+        showBgMedia('video', 'assets/videos/golda3s.mp4');
+      } else if (title.textContent.includes('Glimpse at the Future')) {
+        event.stopPropagation();
+        showBgMedia('video', 'assets/videos/glimpse.mp4');
+      } else if (title.textContent.includes('Sea of Spores')) {
+        event.stopPropagation();
+        showBgMedia('video', 'assets/videos/seaofspores.mp4');
+      } else if (title.textContent.includes('Mycellium')) {
+        event.stopPropagation();
+        showBgMedia('video', 'assets/videos/mycellium.mp4');
       } else {
         hideBgMedia();
       }
@@ -139,6 +155,14 @@ document.addEventListener('DOMContentLoaded', function() {
       video.play();
     });
     video.addEventListener('mouseleave', () => {
+      video.pause();
+      video.currentTime = 0;
+    });
+    // Soporte para móviles
+    video.addEventListener('touchstart', () => {
+      video.play();
+    });
+    video.addEventListener('touchend', () => {
       video.pause();
       video.currentTime = 0;
     });
